@@ -1,6 +1,11 @@
+from fastapi import FastAPI
 import pickle
 import pandas as pd
+import uvicorn
 import numpy as np
+
+# Initialize FastAPI
+app = FastAPI()
 
 # Function to load model
 def load_model(filename):
@@ -49,7 +54,9 @@ def get_prediction(transaction_dict):
     return predictions, probabilities
 
 
-def predict(data: dict):
+# Endpoint to get predictions and probabilities
+@app.post("/predict")
+async def predict(data: dict):
     prediction, probabilities = get_prediction(data)
 
     # Convert NumPy types to Python types
@@ -60,3 +67,7 @@ def predict(data: dict):
         "prediction": prediction,
         "probability": probabilities
     }
+    
+# Run the app
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=10000)
