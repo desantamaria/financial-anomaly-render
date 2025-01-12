@@ -19,17 +19,11 @@ forest = load_model('forest.pkl')
 
 # Preprocess given data into a dataframe
 def preprocess_data(input_dict):
-    # Extract relevant features from the input dictionary
-    # features = ['VIX', 'DXY', 'JPY', 'GBP', 'MXEU', 'MXCN']
-    # data = {feature: [input_dict.get(feature, None)] for feature in features}  # Use get to handle missing keys
+    # Wrap each value in input_dict into a list
+    wrapped_data = {key: [value] for key, value in input_dict.items()}
 
-    # # Calculate moving averages (MA) for each ticker
-    # window = 12  # Adjust window size as needed
-    # for ticker in features:
-    #     data[f'{ticker}_MA'] = [input_dict.get(f'{ticker}_MA', None)]  # Assume MA is provided, or calculate it if needed
-
-    # # Create a pandas DataFrame
-    df = pd.DataFrame(input_dict)
+    # Create a pandas DataFrame from the wrapped data
+    df = pd.DataFrame(wrapped_data)
     return df
 
 
