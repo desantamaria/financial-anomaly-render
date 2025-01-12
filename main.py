@@ -20,7 +20,7 @@ forest = load_model('forest.pkl')
 # Preprocess given data into a dataframe
 def preprocess_data(input_dict):
     # Extract relevant features from the input dictionary
-    features = ['VIX', 'DXY', 'JPY', 'GBP', 'MXEU', 'MXCN']
+    features = ['VIX', 'DXY', 'JPY', 'GBP', 'MXEU', 'MXCN', 'VIX_MA', 'DXY_MA', 'JPY_MA', 'GBP_MA', 'MXEU_MA', 'MXCN_MA']
     data = {feature: [input_dict.get(feature, None)] for feature in features}
 
     df = pd.DataFrame(data)
