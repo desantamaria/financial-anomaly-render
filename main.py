@@ -19,17 +19,18 @@ forest = load_model('forest.pkl')
 
 # Preprocess given data into a dataframe
 def preprocess_data(input_dict):
-    # Wrap each value in input_dict into a list
-    wrapped_data = {key: [value] for key, value in input_dict.items()}
+    # Extract relevant features from the input dictionary
+    features = ['VIX', 'DXY', 'JPY', 'GBP', 'MXEU', 'MXCN']
+    data = {feature: [input_dict.get(feature, None)] for feature in features}
 
-    # Create a pandas DataFrame from the wrapped data
-    df = pd.DataFrame(wrapped_data)
+    df = pd.DataFrame(data)
     return df
 
 
 # Get predictions and probabilities from all models and return average
 def get_prediction(transaction_dict):
     preprocessed_data = preprocess_data(transaction_dict)
+    print(preprocessed_data)
 
     # Get predictions from all models
     predictions = {
@@ -56,6 +57,8 @@ async def predict(data: dict):
     # Convert NumPy types to Python types
     prediction = {model: int(pred) for model, pred in prediction.items()}
     probabilities = {model: float(prob) for model, prob in probabilities.items()}
+    
+    print(prediction)
 
     return {
         "prediction": prediction,
